@@ -19,15 +19,11 @@ export interface IPutCommandArguments extends node.ICommandArgs {
 //
 
 export class PutExCommand extends node.CommandBase {
-  protected _arguments: IPutCommandArguments;
+  public readonly arguments: IPutCommandArguments;
 
   constructor(args: IPutCommandArguments) {
     super();
-    this._arguments = args;
-  }
-
-  get arguments(): IPutCommandArguments {
-    return this._arguments;
+    this.arguments = args;
   }
 
   public neovimCapable(): boolean {
@@ -43,9 +39,8 @@ export class PutExCommand extends node.CommandBase {
 
     vimState.recordedState.registerName = registerName;
 
-    let options: IPutCommandOptions = {
-      forceLinewise: true,
-      forceCursorLastLine: true,
+    const options: IPutCommandOptions = {
+      exCommand: true,
       pasteBeforeCursor: this.arguments.bang,
     };
 
